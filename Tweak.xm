@@ -1,4 +1,6 @@
 #import <substrate.h>
+#import <dlfcn.h>
+#import <CoreFoundation/CoreFoundation.h>
 
 typedef mach_port_t io_object_t;
 typedef io_object_t io_registry_entry_t;

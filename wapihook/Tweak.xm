@@ -1,4 +1,6 @@
 #import <substrate.h>
+#import <dlfcn.h>
+#import <CoreFoundation/CoreFoundation.h>
 
 //#define FAKE_CHINA
 
