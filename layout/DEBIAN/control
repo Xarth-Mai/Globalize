@@ -1,7 +1,7 @@
 Package: com.parrotgeek.globalize
 Name: Globalize
 Depends: mobilesubstrate, firmware (>= 9)
-Version: 0.3.2
+Version: 0.3.3
 Architecture: iphoneos-arm64
 Description: Disables almost all region differences/restrictions on iOS devices. Please run ldrestart after installation.
 Maintainer: parrotgeek1

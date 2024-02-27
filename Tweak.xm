@@ -31,7 +31,15 @@ CFTypeRef replaced_registryEntry(io_registry_entry_t entry, const io_name_t plan
 	return retval;
 }
 
+static int (*orig_EMFIsDeviceInGreaterChina)();
+int replaced_EMFIsDeviceInGreaterChina() {
+  return 0;
+}
+
 __attribute__((constructor)) static void regioninit() {
 	void * IORegistryEntrySearchCFProperty=MSFindSymbol(MSGetImageByName("/System/Library/Frameworks/IOKit.framework/Versions/A/IOKit"), "_IORegistryEntrySearchCFProperty");
 	MSHookFunction((void *)IORegistryEntrySearchCFProperty, (void *)replaced_registryEntry, (void **)&orig_registryEntry);
+
+	void *isGreatChina=MSFindSymbol(MSGetImageByName("/System/Library/PrivateFrameworks/EmojiFoundation.framework/EmojiFoundation"), "_EMFIsDeviceInGreaterChina");
+	MSHookFunction((void *)isGreatChina, (void *)replaced_EMFIsDeviceInGreaterChina, (void **)&orig_EMFIsDeviceInGreaterChina);
 }
