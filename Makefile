@@ -6,6 +6,8 @@ TWEAK_NAME = Globalize
 Globalize_FILES = Tweak.xm
 include $(THEOS_MAKE_PATH)/tweak.mk
 
+Globalize_EXTRA_FRAMEWORKS = CydiaSubstrate
+
 after-install::
 	install.exec "killall -9 SpringBoard"
 SUBPROJECTS += wapihook
