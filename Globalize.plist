@@ -1,1 +1,1 @@
-{ Filter = { Bundles = ( "com.apple.CoreFoundation", "com.apple.EmojiFoundation"); }; }
+{ Filter = { Bundles = ( "com.apple.CoreFoundation", "com.apple.EmojiFoundation", "com.apple.mobilesafari"); }; }

@@ -7,13 +7,11 @@ typedef io_object_t io_registry_entry_t;
 typedef UInt32 IOOptionBits;
 typedef char io_name_t[128];
 
-//#define FAKE_CHINA
-
 const uint32_t swbh[] = {1,0,0,0}; // only "valid"
 
 // 原始函数指针
 static CFTypeRef (*orig_registryEntry)(io_registry_entry_t entry, const io_name_t plane, CFStringRef key, CFAllocatorRef allocator, IOOptionBits options);
-static int (*orig_EMFIsDeviceInGreaterChina)();
+//static int (*orig_EMFIsDeviceInGreaterChina)();
 
 // 替换的函数实现
 CFTypeRef replaced_registryEntry(io_registry_entry_t entry, const io_name_t plane, CFStringRef key, CFAllocatorRef allocator, IOOptionBits options) {
@@ -22,7 +20,7 @@ CFTypeRef replaced_registryEntry(io_registry_entry_t entry, const io_name_t plan
 #ifdef FAKE_CHINA
         retval = CFDataCreate(kCFAllocatorDefault, (const unsigned char *)"CH/A", 5);
 #else
-        retval = CFDataCreate(kCFAllocatorDefault, (const unsigned char *)"TA/A", 4); // FIXME: use real /A /B part
+        retval = CFDataCreate(kCFAllocatorDefault, (const unsigned char *)"TA/A", 5);
 #endif
     } else if (CFEqual(key, CFSTR("software-behavior"))) {
         retval = CFDataCreate(kCFAllocatorDefault, (const UInt8 *)&swbh ,16);
@@ -43,6 +41,6 @@ __attribute__((constructor)) static void regioninit() {
     MSHookFunction(IORegistryEntrySearchCFProperty, (void *)replaced_registryEntry, (void **)&orig_registryEntry);
     
     // Hook EMFIsDeviceInGreaterChina 函数
-    void * isGreatChina = MSFindSymbol(MSGetImageByName("/System/Library/PrivateFrameworks/EmojiFoundation.framework/EmojiFoundation"), "_EMFIsDeviceInGreaterChina");
-    MSHookFunction(isGreatChina, (void *)replaced_EMFIsDeviceInGreaterChina, (void **)&orig_EMFIsDeviceInGreaterChina);
+//    void * isGreatChina = MSFindSymbol(MSGetImageByName("/System/Library/PrivateFrameworks/EmojiFoundation.framework/EmojiFoundation"), "_EMFIsDeviceInGreaterChina");
+//    MSHookFunction(isGreatChina, (void *)replaced_EMFIsDeviceInGreaterChina, (void **)&orig_EMFIsDeviceInGreaterChina);
 }
