@@ -2,21 +2,17 @@
 #import <dlfcn.h>
 #import <CoreFoundation/CoreFoundation.h>
 
-//#define FAKE_CHINA
 
-static CFTypeRef (*orig_WiFiDeviceClientCopyProperty)(void *cl,CFStringRef key);
-CFTypeRef replaced_WiFiDeviceClientCopyProperty(void *cl,CFStringRef key) {
-	CFTypeRef retval = NULL;
-	if (CFEqual(key, CFSTR("WAPIEnabled")))  {
-#ifdef FAKE_CHINA
-        	retval = CFSTR("1");
-#else
-        	retval = NULL;
-#endif
-	} else {
-		retval = orig_WiFiDeviceClientCopyProperty( cl,key );
-	}
-	return retval;
+static CFTypeRef (*orig_WiFiDeviceClientCopyProperty)(void *cl, CFStringRef key);
+
+CFTypeRef replaced_WiFiDeviceClientCopyProperty(void *cl, CFStringRef key) {
+    CFTypeRef retval = NULL;
+    if (CFEqual(key, CFSTR("WAPIEnabled"))) {
+        retval = NULL;
+    } else {
+        retval = orig_WiFiDeviceClientCopyProperty(cl, key);
+    }
+    return retval;
 }
 
 

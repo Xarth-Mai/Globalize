@@ -11,7 +11,6 @@ const uint32_t swbh[] = {1,0,0,0}; // only "valid"
 
 // 原始函数指针
 static CFTypeRef (*orig_registryEntry)(io_registry_entry_t entry, const io_name_t plane, CFStringRef key, CFAllocatorRef allocator, IOOptionBits options);
-static NSString *(*orig_EMFGetDeviceRegionCode)();
 
 // 替换的 registryEntry 函数实现
 CFTypeRef replaced_registryEntry(io_registry_entry_t entry, const io_name_t plane, CFStringRef key, CFAllocatorRef allocator, IOOptionBits options) {
@@ -27,18 +26,9 @@ CFTypeRef replaced_registryEntry(io_registry_entry_t entry, const io_name_t plan
 }
 
 
-// 替换的 EMFGetDeviceRegionCode 函数实现
-NSString *replaced_EMFGetDeviceRegionCode() {
-    return @"TA";
-}
-
 // Hook初始化函数
 __attribute__((constructor)) static void regioninit() {
     // Hook IORegistryEntrySearchCFProperty 函数
     void *IORegistryEntrySearchCFProperty = MSFindSymbol(MSGetImageByName("/System/Library/Frameworks/IOKit.framework/Versions/A/IOKit"), "_IORegistryEntrySearchCFProperty");
     MSHookFunction(IORegistryEntrySearchCFProperty, (void *)replaced_registryEntry, (void **)&orig_registryEntry);
-    
-    // Hook EMFGetDeviceRegionCode 函数
-    void *EMFGetDeviceRegionCode = MSFindSymbol(MSGetImageByName("/System/Library/PrivateFrameworks/EmojiFoundation.framework/EmojiFoundation"), "_EMFGetDeviceRegionCode");
-    MSHookFunction(EMFGetDeviceRegionCode, (void *)replaced_EMFGetDeviceRegionCode, (void **)&orig_EMFGetDeviceRegionCode);
 }
