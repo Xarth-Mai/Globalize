@@ -14,4 +14,5 @@ after-install::
 	install.exec "killall -9 SpringBoard"
 SUBPROJECTS += wapihook
 SUBPROJECTS += pridewatchfacehook
+SUBPROJECTS += emojihook
 include $(THEOS_MAKE_PATH)/aggregate.mk
