@@ -11,7 +11,6 @@ const uint32_t swbh[] = {1,0,0,0}; // only "valid"
 
 // 原始函数指针
 static CFTypeRef (*orig_registryEntry)(io_registry_entry_t entry, const io_name_t plane, CFStringRef key, CFAllocatorRef allocator, IOOptionBits options);
-//static int (*orig_EMFIsDeviceInGreaterChina)();
 
 // 替换的函数实现
 CFTypeRef replaced_registryEntry(io_registry_entry_t entry, const io_name_t plane, CFStringRef key, CFAllocatorRef allocator, IOOptionBits options) {
@@ -30,8 +29,8 @@ CFTypeRef replaced_registryEntry(io_registry_entry_t entry, const io_name_t plan
     return retval;
 }
 
-int replaced_EMFIsDeviceInGreaterChina() {
-    return 0;
+NSString *replaced_EMFGetDeviceRegionCode() {
+    return @"TA";
 }
 
 // Hook初始化函数
@@ -40,7 +39,7 @@ __attribute__((constructor)) static void regioninit() {
     void * IORegistryEntrySearchCFProperty = MSFindSymbol(MSGetImageByName("/System/Library/Frameworks/IOKit.framework/Versions/A/IOKit"), "_IORegistryEntrySearchCFProperty");
     MSHookFunction(IORegistryEntrySearchCFProperty, (void *)replaced_registryEntry, (void **)&orig_registryEntry);
     
-    // Hook EMFIsDeviceInGreaterChina 函数
-//    void * isGreatChina = MSFindSymbol(MSGetImageByName("/System/Library/PrivateFrameworks/EmojiFoundation.framework/EmojiFoundation"), "_EMFIsDeviceInGreaterChina");
-//    MSHookFunction(isGreatChina, (void *)replaced_EMFIsDeviceInGreaterChina, (void **)&orig_EMFIsDeviceInGreaterChina);
+    // Hook EMFGetDeviceRegionCode 函数
+    void *EMFGetDeviceRegionCode = MSFindSymbol(MSGetImageByName("/System/Library/PrivateFrameworks/EmojiFoundation.framework/EmojiFoundation"), "_EMFGetDeviceRegionCode");
+    MSHookFunction(EMFGetDeviceRegionCode, (void *)replaced_EMFGetDeviceRegionCode);
 }
