@@ -1,4 +1,6 @@
 TARGET := iphone:clang:16.5:16.0
+ROOTLESS=1
+THEOS_PACKAGE_SCHEME=rootless
 
 include $(THEOS)/makefiles/common.mk
 
@@ -12,6 +14,4 @@ after-install::
 	install.exec "killall -9 SpringBoard"
 SUBPROJECTS += wapihook
 SUBPROJECTS += pridewatchfacehook
-#SUBPROJECTS += taiwanflaghook
-#SUBPROJECTS += taiwanflaghookui
 include $(THEOS_MAKE_PATH)/aggregate.mk
