@@ -22,7 +22,7 @@ CFTypeRef replaced_registryEntry(io_registry_entry_t entry, const io_name_t plan
 #ifdef FAKE_CHINA
         retval = CFDataCreate(kCFAllocatorDefault, (const unsigned char *)"CH/A", 5);
 #else
-        retval = CFDataCreate(kCFAllocatorDefault, (const unsigned char *)"X/A", 4); // FIXME: use real /A /B part
+        retval = CFDataCreate(kCFAllocatorDefault, (const unsigned char *)"TA/A", 4); // FIXME: use real /A /B part
 #endif
     } else if (CFEqual(key, CFSTR("software-behavior"))) {
         retval = CFDataCreate(kCFAllocatorDefault, (const UInt8 *)&swbh ,16);
