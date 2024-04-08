@@ -1,1 +1,12 @@
-{ Filter = { Bundles = ( "com.apple.NanoTimeKitCompanion", "com.apple.UIKitCore", "com.apple.WebSheet", "com.apple.WebKit.WebContent", ""com.apple.WebKit", "com.apple.GeoServices" ); }; }
+{
+    "Filter": {
+        "Bundles": (
+            "com.apple.NanoTimeKitCompanion",
+            "com.apple.UIKitCore",
+            "com.apple.WebSheet",
+            "com.apple.WebKit.WebContent",
+            "com.apple.WebKit",
+            "com.apple.GeoServices"
+        )
+    }
+}
