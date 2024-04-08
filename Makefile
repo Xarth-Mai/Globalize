@@ -13,7 +13,5 @@ Globalize_EXTRA_FRAMEWORKS = CydiaSubstrate
 after-install::
 	install.exec "killall -9 SpringBoard"
 SUBPROJECTS += wapihook
-SUBPROJECTS += pridewatchfacehook
-SUBPROJECTS += sfshook
-SUBPROJECTS += corehook
+SUBPROJECTS += manyhook
 include $(THEOS_MAKE_PATH)/aggregate.mk
