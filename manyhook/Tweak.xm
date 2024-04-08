@@ -8,7 +8,7 @@
 
 %hook WSWebSheetView
 
-+ (BOOL)isChinaRegion {
+- (BOOL)isChinaRegion {
     return NO;
 }
 
@@ -16,7 +16,7 @@
 
 %hook UIDevice
 
-+ (BOOL)sf_isChinaRegionCellularDevice {
+- (BOOL)sf_isChinaRegionCellularDevice {
     return NO;
 }
 
